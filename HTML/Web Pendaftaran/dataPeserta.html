@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Peserta</title>
+</head>
+<body bgcolor="lightyellow">
+    <header>
+        <nav align="center">
+            <a href="formulirPendaftaran.html">Formulir Pendaftaran</a> |
+            <a href="tabelPeserta.html">Tabel Peserta</a>
+            <hr>
+        </nav>
+        <h2 align="center" style="color: pink;">Hasil Formulir Pendaftaran</h2>
+    </header>
+    <main>
+        <fieldset>
+            <legend style="color: pink;">Data Pribadi</legend>
+            <div style="background-color: lavender;">
+                <table cellspacing="5">
+                    <tr>
+                        <td>Nama</td>
+                        <td>: <span id="nama"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Jenis Kelamin</td>
+                        <td>: <span id="gender"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Agama</td>
+                        <td>: <span id="agama"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Tempat Lahir</td>
+                        <td>: <span id="tempat"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Tanggal Lahir</td>
+                        <td>: <span id="tanggal"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Alamat</td>
+                        <td>: <span id="alamat"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend style="color: pink;">Pendidikan</legend>
+            <div style="background-color: pink;">
+                <table cellspacing="5">
+                    <tr>
+                        <td>SD</td>
+                        <td>: <span id="sd"></span> (<span id="sd_masuk"></span> - <span id="sd_keluar"></span>)</td>
+                    </tr>
+                    <tr>
+                        <td>SMP</td>
+                        <td>: <span id="smp"></span> (<span id="smp_masuk"></span> - <span id="smp_keluar"></span>)</td>
+                    </tr>
+                    <tr>
+                        <td>SMA</td>
+                        <td>: <span id="sma"></span> (<span id="sma_masuk"></span> - <span id="sma_keluar"></span>)</td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend style="color: pink;">Pelatihan</legend>
+            <div style="background-color: lavender;">
+                <table cellspacing="5">
+                    <tr>
+                        <td>Minat</td>
+                        <td>: <span id="minat"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Kompetensi</td>
+                        <td>: <span id="kompetensi"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend style="color: pink;">Jurusan</legend>
+            <div style="background-color: pink;">
+                <table cellspacing="5">
+                    <tr>
+                        <td>Pilihan Jurusan</td>
+                        <td>: <span id="jurusan"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+    </main>
+
+    <script>
+        //Ambil data dari URL
+        const params= new URLSearchParams(window.location.search);
+        
+        //Data Pribadi
+        //ambil nilai dari url dan menampilkan lagi ke elemen html sesuai id
+        document.getElementById("nama").textContent = params.get("nama");
+        document.getElementById("gender").textContent = params.get("gender");
+        document.getElementById("agama").textContent = params.get("agama");
+        document.getElementById("tempat").textContent = params.get("tempat");
+        //ada tanda tanya => data null != error
+        document.getElementById("tanggal").textContent = params.get("tanggal")?.replaceAll("-", "/") || ""; //ganti semua - dengan /, kalo null = kosong.
+        document.getElementById("alamat").textContent = params.get("alamat");
+
+        // Pendidikan
+        document.getElementById("sd").textContent = params.get("sd");
+        document.getElementById("sd_masuk").textContent = params.get("sd_masuk")?.replaceAll("-", "/") || "";
+        document.getElementById("sd_keluar").textContent = params.get("sd_keluar")?.replaceAll("-", "/") || "";
+
+        document.getElementById("smp").textContent = params.get("smp");
+        document.getElementById("smp_masuk").textContent = params.get("smp_masuk")?.replaceAll("-", "/") || "";
+        document.getElementById("smp_keluar").textContent = params.get("smp_keluar")?.replaceAll("-", "/") || "";
+
+        document.getElementById("sma").textContent = params.get("sma");
+        document.getElementById("sma_masuk").textContent = params.get("sma_masuk")?.replaceAll("-", "/") || "";;
+        document.getElementById("sma_keluar").textContent = params.get("sma_keluar")?.replaceAll("-", "/") || "";
+
+        // Pelatihan 
+        //ini getall karena bentukanya checkbox = input-nya bisa banyak
+        const minat = params.getAll("minat").join(", ");
+        const kompetensi = params.getAll("kompetensi").join(", ");
+        document.getElementById("minat").textContent = minat;
+        document.getElementById("kompetensi").textContent = kompetensi;
+
+        // Jurusan
+        document.getElementById("jurusan").textContent = params.get("jurusan");
+
+    </script>
+</body>
+</html>
